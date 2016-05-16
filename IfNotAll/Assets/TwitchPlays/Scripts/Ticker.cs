@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class Ticker : MonoBehaviour {
+public class Ticker : Singleton<Ticker> {
 
     public int maxLines;
 

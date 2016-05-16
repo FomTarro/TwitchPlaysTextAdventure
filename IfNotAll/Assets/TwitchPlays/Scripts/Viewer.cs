@@ -52,6 +52,15 @@ public class Viewer {
 
     }
 
+    public Viewer(string name)
+    {
+        username = name;
+        archetype = Archetypes.Streamer;
+        ResourceTracker.crew++;
+        GenerateStartingBounty();
+
+    }
+
     void GenerateStartingBounty()
     {
         switch (archetype)
@@ -75,6 +84,10 @@ public class Viewer {
                 gold = UnityEngine.Random.Range(10, 17);
                 food = UnityEngine.Random.Range(1, 3);
                 ResourceTracker.trader++;
+                break;
+            case Archetypes.Streamer:
+                gold = 15;
+                food = 15;
                 break;
             default:
                 gold = UnityEngine.Random.Range(4, 10);

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class TextBody : MonoBehaviour {
+public class TextBody :Singleton<TextBody> {
 
     public int maxLines;
 
@@ -46,6 +46,7 @@ public class TextBody : MonoBehaviour {
 
     public void PrintToBody(string msg)
     {
+        msg = msg.EnforceNewlines();
         string[] lines = msg.Split('\n');
         foreach(string s in lines)
         {

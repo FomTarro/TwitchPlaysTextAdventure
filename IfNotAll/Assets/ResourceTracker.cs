@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 
-public class ResourceTracker : MonoBehaviour {
+public class ResourceTracker : Singleton<ResourceTracker> {
 
     public static int crew = 0;
     public static int dead = 0;
@@ -15,13 +15,17 @@ public class ResourceTracker : MonoBehaviour {
     public static int tracker = 0;
     public static int trader = 0;
 
+    public static int day = -1;
+
     [SerializeField]
-    private Text crewText, deadText, foodText, goldText, soldierText, clericText, trackerText, traderText;
+    private Text crewText, deadText, foodText, goldText, soldierText, clericText, trackerText, traderText, dayText;
+
+    private Ticker ticker;
 
 	// Use this for initialization
 	void Start () {
-	
-	}
+        ticker = Ticker.Instance;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -35,5 +39,13 @@ public class ResourceTracker : MonoBehaviour {
         clericText.text = " CLERIC: " + cleric;
         trackerText.text = " TRACKER: " + tracker;
         traderText.text = " TRADER: " + trader;
+
+        dayText.text = " DAY: " + Mathf.Max(0, day).ToString();
+    }
+
+    public void IncrementDay()
+    {
+        day++;
+        ticker.PrintToTicker("DAY " + day + " BEGINS");
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.Events;
 using System.Collections.Generic;
 
-[RequireComponent (typeof(TwitchIRC))]
+//[RequireComponent (typeof(TwitchIRC))]
 public class PlayCommands : MonoBehaviour 
 {
 	[Tooltip("List of available twitch commands")]
@@ -18,7 +18,7 @@ public class PlayCommands : MonoBehaviour
 	void Start()
 	{
         //Make twitchIRC a singleton, probably, and then you can have per-module events
-		twitch = GetComponent<TwitchIRC>();
+        twitch = TwitchIRC.Instance;
 
 		twitch.messageRecievedEvent.AddListener(getCommand);
 	}
@@ -27,9 +27,10 @@ public class PlayCommands : MonoBehaviour
 	{
 		//Debug.Log(str);
         string playerName = str.Substring(1, str.IndexOf("!")-1);
-        Debug.Log(playerName);
-		//Remove non-command parts of message (like username)
-		int msgIndex = str.IndexOf("PRIVMSG #");
+        //Debug.Log(playerName);
+        bool isStreamer = playerName.ToLower().Equals(twitch.nickName.ToLower());
+        //Remove non-command parts of message (like username)
+        int msgIndex = str.IndexOf("PRIVMSG #");
         str = str.Substring(msgIndex + twitch.nickName.Length + 11);
 		//Allow non delimited commands using the entire string (ie 'A' for A-button instead of 'button: A')
 		string cmd = str;
@@ -44,18 +45,42 @@ public class PlayCommands : MonoBehaviour
 			}
 		}
         str = playerName + seperator + str;
-		Debug.Log("Got Command: " + cmd);
+		//Debug.Log("Got Command: " + cmd);
 		foreach(var v in Commands)
 		{
-            if (((v.streamerOnly == playerName.ToLower().Equals(twitch.nickName.ToLower())) || v.streamerOnly == false) && v.currentlyActive)
-                if (cmd.Trim().ToLower().Equals(v.commandKey.Trim().ToLower()))
+            if (((v.streamerOnly == isStreamer) || v.streamerOnly == false) && v.currentlyActive)
+                if ((isStreamer || (ViewerRegistry.Registry.ContainsKey(playerName) && ViewerRegistry.Registry[playerName].IsAlive)) || cmd.Trim().ToLower().Equals("join"))
                 {
-                    //Debug.Log(str);
-                    v.onCommand.Invoke(str);
+                    if (cmd.Trim().ToLower().Equals(v.commandKey.Trim().ToLower()))
+                    {
+                        //Debug.Log(str);
+                        v.onCommand.Invoke(str.ToLower());
+                    }
+                }
+                else
+                {
+                    Debug.Log("Command not executed because " + playerName + " is dead!");
                 }
 		}
 	}
+
+    public static void ToggleCommand(string cmd, bool enabled)
+    {
+        PlayCommands[] playCommands = FindObjectsOfType<PlayCommands>();
+        foreach (PlayCommands pc in playCommands)
+        {
+            foreach (var v in pc.Commands)
+            {
+                if (cmd.Trim().ToLower().Equals(v.commandKey.Trim().ToLower()))
+                {
+                    v.currentlyActive = enabled;
+                    Debug.Log(v.name + " enabled: " + enabled);  
+                }
+            }
+        }
+    }
 }
+
 
 [System.Serializable]
 public class TwitchCommand
@@ -69,7 +94,9 @@ public class TwitchCommand
 	[Tooltip("string key for command\n   ie \'vote\', \'A\', \'up\'")]
 	public string commandKey;
 	[Tooltip("Method to call, will pass command options as a string")]
-	[SerializeField]
+    public string description;
+    [Tooltip("String displayed when the HELP command is called")]
+    [SerializeField]
  	public stringEvent onCommand;
 }
 

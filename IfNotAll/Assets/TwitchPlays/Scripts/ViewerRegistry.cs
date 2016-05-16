@@ -37,42 +37,33 @@ public class ViewerRegistry : MonoBehaviour {
 
     public void AddToRegistry(string input)
     {
-        Debug.Log(input);
-        string username = input.Substring(0, input.IndexOf(PlayCommands.seperator));
-        Debug.Log(username);
-        string parameter = input.Substring(username.Length+1);
-        parameter = parameter.Trim();
-        Debug.Log(parameter);
+        CommandInput cin = new CommandInput(input);
+        string username = cin.username;
+        string parameter = cin.parameter;
 
-        if (!Registry.ContainsKey(username)) {
+        if (!Registry.ContainsKey(username) && !username.ToLower().Equals(TwitchIRC.Instance.nickName.ToLower())) {
 
-            Viewer v = new Viewer(username, parameter.ToLower());
+            Viewer v = new Viewer(username, parameter);
             Registry.Add(username, v);
 
             ticker.PrintToTicker(username + " has joined the crew.\nHired as a " + Registry[username].Archetype.ToString()+". Brought " + Registry[username].food + " food and " + Registry[username].gold + " gold."); ;
 
-            /*
-            GameObject go = Instantiate<GameObject>(characterPrefab.gameObject);
-            Registry.Add(username, go.GetComponent<ViewerCharacter>());
-            Registry[username].GenerateStartingStats();
-            ticker.PrintToTicker(username + " has joined the crew.\nHired as a " + parameter +".\nBrought " + Registry[username].food + " food and " + Registry[username].gold + " gold.");
-            ResourceTracker.crew = Registry.Count;
-            ResourceTracker.food += Registry[username].food;
-            ResourceTracker.gold += Registry[username].gold;
-            */
+        }
+        else if (!Registry.ContainsKey(username) && username.ToLower().Equals(TwitchIRC.Instance.nickName.ToLower())){
+            Viewer v = new Viewer(username);
+            Registry.Add(username, v);
+
+            ticker.PrintToTicker(username + " has founded the caravan.\nProvided an initial supply of " + Registry[username].food + " food and " + Registry[username].gold + " gold."); ;
         }
     }
 
     public void KillPlayer(string input)
     {
-       
-        Debug.Log(input);
-        string username = input.Substring(0, input.IndexOf(PlayCommands.seperator));
-        string parameter = input.Substring(username.Length + 1);
-        parameter = parameter.Trim();
-        Debug.Log(parameter);
+        CommandInput cin = new CommandInput(input);
+        string username = cin.username;
+        string parameter = cin.parameter;
 
-        if(Registry.ContainsKey(parameter) && Registry[parameter].IsAlive)
+        if (Registry.ContainsKey(parameter) && Registry[parameter].IsAlive)
         {
             Registry[parameter].Kill(username);
             int foodProvided = Random.Range(1, 4);

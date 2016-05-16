@@ -83,7 +83,7 @@ public class StreamerInput : MonoBehaviour {
                 {
                     login.username = cmd;
                     getUsername = false;
-                    body.PrintToBody("Please provide an oAuth Token.\nIf you are unsure what an oAuth Token is, type 'HELP' for assistance.");
+                    body.PrintToBody("Please provide an oAuth Token.\nIf you are unsure what an oAuth Token is, type 'OAUTH' for assistance.");
                 }
                 else if(inputField.text.ToLower().Contains("oauth:"))
                 {
@@ -91,7 +91,7 @@ public class StreamerInput : MonoBehaviour {
                     loginIniatated = false;
                     login.Submit();
                 }
-                else if (cmd.ToLower().Equals("help"))
+                else if (cmd.ToLower().Equals("oauth"))
                 {
                     Application.OpenURL("http://www.twitchapps.com/tmi");
                 }

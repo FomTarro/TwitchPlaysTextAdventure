@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 //Primary code by Grahnz on GitHub: https://github.com/Grahnz/TwitchIRC-Unity
 
-public class TwitchIRC : MonoBehaviour
+public class TwitchIRC : Singleton<TwitchIRC>
 {
 	[Tooltip("oAuth Token for Twitch Account")]
     public string oauth;
@@ -133,7 +133,7 @@ public class TwitchIRC : MonoBehaviour
         {
             string commandMsg = ":"+nickName.ToLower()+"!"+nickName.ToLower() + "@"+nickName.ToLower() + ".tmi.twitch.tv " + "PRIVMSG #" + nickName.ToLower() + " :" + msg;
             //Debug.Log("PRIVMSG #" + nickName.ToLower() + " :" + msg);
-            //Debug.Log(commandMsg);
+            Debug.Log(commandMsg);
             messageRecievedEvent.Invoke(commandMsg);
             commandQueue.Enqueue(commandMsg);
         }
