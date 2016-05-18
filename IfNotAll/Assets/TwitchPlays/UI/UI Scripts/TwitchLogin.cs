@@ -87,8 +87,8 @@ public class TwitchLogin : MonoBehaviour {
         }
         else
         {
-            body.PrintToBody("Successfuly connected to Twitch chat!");
-            irc.SendMsg("start");
+            body.PrintToBody("Successfuly connected to Twitch chat!\nType 'START' to begin.");
+            //irc.SendMsg("start");
         }
         yield return null;
     }

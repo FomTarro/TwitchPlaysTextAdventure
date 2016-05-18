@@ -22,7 +22,7 @@ public class TextBody :Singleton<TextBody> {
     // Use this for initialization
     IEnumerator Start () {
 
-        testString = "WAY TO FALL \nA Twitch-integrated multiplayer text quest.\nBuilt in Unity by Tom Farro.\nRevision 00 / Serial number 000000.\n57 41 59 54 4F 46 41 4C 4C\n";
+        testString = "WAY TO FALL \nA Twitch-integrated multiplayer text pilgrimage.\nBuilt in Unity by Tom Farro.\nType 'HELP' for a list of commands.\nRevision 00 / Serial number 000000.\n57 41 59 54 4F 46 41 4C 4C\n";
         PrintToBody(testString);
         yield return new WaitForSeconds(1.0f);
         if (!TwitchLogin.connected)

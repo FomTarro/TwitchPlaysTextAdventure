@@ -1,0 +1,4 @@
+<module>
+	<string id = "help">Provides a description of commands.\nCan be made more specific by typing 'HELP: &lt;search term&gt;'.</string>
+    <string id = "tooltip">tooltip</string>
+</module>

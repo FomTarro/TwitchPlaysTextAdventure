@@ -46,6 +46,6 @@ public class ResourceTracker : Singleton<ResourceTracker> {
     public void IncrementDay()
     {
         day++;
-        ticker.PrintToTicker("DAY " + day + " BEGINS");
+        ticker.PrintToTicker("---------------\nDAY " + day + " BEGINS\n---------------");
     }
 }

@@ -20,17 +20,6 @@ public class Poll : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        string resultsText = "Type 'VOTE: <option>' to vote!\n";
-        foreach (string s in results.Keys)
-        {
-            resultsText += s + ": ";
-            decimal percentage = ((decimal)results[s].Count / Mathf.Max(1, voters.Count)) * 100.00m;
-            string percentageString = percentage.ToString("F").PadLeft(6, '0');
-            resultsText += percentageString + "% / ";
-            Debug.Log(percentageString);
-        }
-
-        resultsTextField.text = resultsText;
     }
 
     public void MakePoll(string input)
@@ -55,36 +44,72 @@ public class Poll : MonoBehaviour {
                 Debug.Log(e.Message);
             }
         }
+        if(results.Count > 1)
+        {
+            isActive = true;
+            ViewResults("");
+        }
+        else
+        {
+            TextBody.Instance.PrintToBody("Not enough different options provided.\nWhat kind of poll has only one choice?");
+        }
 
+    }
+
+    public void ClosePoll(string input)
+    {
+        if (isActive)
+        {
+            isActive = false;
+            PostResults(input);
+        }
     }
 
     public void Vote(string input)
     {
-        CommandInput cin = new CommandInput(input);
-        string username = cin.username;
-        string parameter = cin.parameter;
+            CommandInput cin = new CommandInput(input);
+            string username = cin.username;
+            string parameter = cin.parameter;
 
-        if (results.ContainsKey(parameter) && !voters.Contains(ViewerRegistry.Registry[username]))
-        {
-            Debug.Log("Voted!");
-            voters.Add(ViewerRegistry.Registry[username]);
-            results[parameter].Add(ViewerRegistry.Registry[username]);
+            //Debug.Log("Casting vote for " + parameter);
+
+            if (results.ContainsKey(parameter) && ViewerRegistry.Registry.ContainsKey(username) && !voters.Contains(ViewerRegistry.Registry[username]))
+            {
+                //Debug.Log("Voted!");
+                voters.Add(ViewerRegistry.Registry[username]);
+                results[parameter].Add(ViewerRegistry.Registry[username]);
+                ViewResults("");
         }
-
     }
 
     public void ViewResults(string input)
     {
-        string resultsText = "Type 'VOTE: <option>' to vote!\n";
+        string howToText = "Type 'VOTE: <option>' to vote!\n";
+        string resultsText = "";
         foreach (string s in results.Keys)
         {
-            resultsText += s + ": ";
-            decimal percentage = ((decimal)results[s].Count / voters.Count) * 100.00m;
+            resultsText += s.ToUpper() + ": ";
+            decimal percentage = ((decimal)results[s].Count / Mathf.Max(1,voters.Count)) * 100.00m;
             string percentageString = percentage.ToString("F").PadLeft(6, '0');
             resultsText += percentageString + "% / ";
-            Debug.Log(percentageString);
+            //Debug.Log(percentageString);
         }
 
-        resultsTextField.text = resultsText;
+        BodyHeader.Instance.PrintToHeader(howToText + resultsText);
+    }
+
+    public void PostResults(string input)
+    {
+        string resultsText = "Poll concluded with the followng results:";
+        foreach (string s in results.Keys)
+        {
+            resultsText += "\n" + s.ToUpper() + ": ";
+            decimal percentage = ((decimal)results[s].Count / Mathf.Max(1, voters.Count)) * 100.00m;
+            string percentageString = percentage.ToString("F").PadLeft(6, '0');
+            resultsText += percentageString + "%";
+            Debug.Log(percentageString);
+        }
+        BodyHeader.Instance.ResetText();
+        Ticker.Instance.PrintToTicker(resultsText);
     }
 }
