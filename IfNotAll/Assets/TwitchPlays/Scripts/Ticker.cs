@@ -35,6 +35,10 @@ public class Ticker : Singleton<Ticker> {
 
     public void PrintToTicker(string msg)
     {
+        foreach(Viewer v in ViewerRegistry.Registry.Values)
+        {
+            msg = msg.Replace(v.Username.ToLower(), "<color=cyan>" + v.Username + "</color>");
+        }
         string[] list = msg.Split('\n');
         foreach(string s in list)
         {

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Linq;
 
 public class TextBody :Singleton<TextBody> {
 
@@ -46,8 +47,32 @@ public class TextBody :Singleton<TextBody> {
 
     public void PrintToBody(string msg)
     {
+        
         msg = msg.EnforceNewlines();
-        string[] lines = msg.Split('\n');
+        msg = msg.HighlightCommands();
+        /*
+        int[] indicies = msg.IndexOfAll('\'');
+        string start = "<color=yellow>";
+        string end = "</color>";
+        int offset = 0;
+        int mod = 0;
+        for(int i = 0; i < indicies.Length; i++)
+        {
+            if(mod%2 == 0)
+            {
+                msg = msg.Insert(indicies[i] + offset, start);
+                offset += start.Length;
+            }
+            else
+            {
+                msg = msg.Insert(indicies[i] + offset + 1, end);
+                offset += end.Length + 1;
+            }
+            mod++;
+        }
+        */
+
+            string[] lines = msg.Split('\n');
         foreach(string s in lines)
         {
             bodyHistory.Add(s + "\n");

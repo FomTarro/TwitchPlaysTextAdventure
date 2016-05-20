@@ -7,6 +7,6 @@ public enum Archetypes {
     Cleric,
     Soldier,
     Tracker,
-    Trader,
+    Vendor,
     
 }

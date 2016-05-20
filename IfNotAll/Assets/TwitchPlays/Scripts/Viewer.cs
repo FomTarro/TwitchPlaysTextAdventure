@@ -39,7 +39,7 @@ public class Viewer {
                 archetype = Archetypes.Tracker;
                 break;
             case "trader":
-                archetype = Archetypes.Trader;
+                archetype = Archetypes.Vendor;
                 break;
             default:
                 Array a = Enum.GetValues(typeof(Archetypes));
@@ -80,7 +80,7 @@ public class Viewer {
                 food = UnityEngine.Random.Range(4, 8);
                 ResourceTracker.tracker++;
                 break;
-            case Archetypes.Trader:
+            case Archetypes.Vendor:
                 gold = UnityEngine.Random.Range(10, 17);
                 food = UnityEngine.Random.Range(1, 3);
                 ResourceTracker.trader++;
@@ -115,7 +115,7 @@ public class Viewer {
             case Archetypes.Tracker:
                 ResourceTracker.tracker--;
                 break;
-            case Archetypes.Trader:
+            case Archetypes.Vendor:
                 ResourceTracker.trader--;
                 break;
             default:

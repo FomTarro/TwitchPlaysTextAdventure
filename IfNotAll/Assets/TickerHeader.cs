@@ -13,6 +13,7 @@ public class TickerHeader : Singleton<TickerHeader> {
     void Start()
     {
         defaultText = textField.text;
+        PrintToHeader(defaultText);
     }
 
     // Update is called once per frame
@@ -23,6 +24,8 @@ public class TickerHeader : Singleton<TickerHeader> {
 
     public void PrintToHeader(string msg)
     {
+        msg = msg.EnforceNewlines();
+        msg = msg.HighlightCommands();
         textField.text = msg;
     }
 
