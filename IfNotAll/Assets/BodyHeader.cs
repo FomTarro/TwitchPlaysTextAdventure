@@ -31,6 +31,6 @@ public class BodyHeader : Singleton<BodyHeader> {
 
     public void ResetText()
     {
-        textField.text = defaultText;
+        PrintToHeader(defaultText);
     }
 }

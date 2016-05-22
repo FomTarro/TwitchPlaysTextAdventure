@@ -18,7 +18,7 @@ public class ResourceTracker : Singleton<ResourceTracker> {
     public static int day = -1;
 
     [SerializeField]
-    private Text crewText, deadText, foodText, goldText, soldierText, clericText, trackerText, traderText, dayText;
+    private Text crewText, deadText, foodText, goldText, soldierText, clericText, trackerText, traderText, dayText, locText;
 
     private Ticker ticker;
 
@@ -46,12 +46,20 @@ public class ResourceTracker : Singleton<ResourceTracker> {
     public void IncrementDay()
     {
         day++;
-        string dayString = "DAY " + day + " BEGINS";
+        string dayString = "<color=#"+HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["cyan"])+">DAY " + day + " BEGINS</color>";
         string buffer = "";
+        /*
         for(int i = 0; i < dayString.Length; i++)
         {
             buffer += "-";
         }
-        ticker.PrintToTicker(buffer+"\nDAY " + day + " BEGINS\n"+buffer);
+        */
+        //buffer = "-------------------------------------------------";
+        ticker.PrintToTicker(buffer + dayString + buffer);
+    }
+
+    public void SetLocation(string loc)
+    {
+        locText.text = " LOC: " + loc;
     }
 }

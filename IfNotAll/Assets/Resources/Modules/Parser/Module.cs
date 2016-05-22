@@ -16,11 +16,18 @@ public class Module : MonoBehaviour {
     {
         get { return stringList; }
     }
+    public string locationName;
 
 	// Use this for initialization
 	void Awake () {
         Parse();
+       
 	}
+
+    void Start()
+    {
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -45,11 +52,28 @@ public class Module : MonoBehaviour {
                 }
                 catch(Exception e)
                 {
-                    
+                    Debug.Log(e.Message);
                 }
                 
             }
 
         }
+
+        if (stringList.ContainsKey("loc"))
+        {
+            locationName = stringList["loc"];
+        }
+        else
+        {
+            locationName = "Uncharted Territory";
+        }
+        
+
+    }
+
+    public void EnterArea()
+    {
+        Ticker.Instance.PrintToTicker("Arrived at <color=#"+HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["magenta"])+">" + locationName+"</color>.");
+        ResourceTracker.Instance.SetLocation(locationName);
     }
 }

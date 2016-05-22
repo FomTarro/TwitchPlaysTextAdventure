@@ -53,7 +53,7 @@ public class ViewerRegistry : MonoBehaviour {
             Viewer v = new Viewer(username);
             Registry.Add(username, v);
 
-            ticker.PrintToTicker(username + " has founded the caravan.\nProvided an initial supply of " + Registry[username].food + " food and " + Registry[username].gold + " gold."); ;
+            ticker.PrintToTicker(username + " has founded the caravan.\nProvided an initial supply of <color=#"+HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["leaf"])+">" + Registry[username].food + " food</color> and <color=#" + HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["leaf"]) + ">" + Registry[username].gold + " gold</color>."); ;
         }
     }
 
@@ -68,7 +68,7 @@ public class ViewerRegistry : MonoBehaviour {
             Registry[parameter].Kill(username);
             int foodProvided = Random.Range(1, 4);
             ResourceTracker.food += foodProvided;
-            ticker.PrintToTicker(parameter + " was killed.\nReluctantly, their body provides " + foodProvided + " food.");
+            ticker.PrintToTicker(parameter + " was <color=#" + HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["red"]) + ">killed</color>.\nReluctantly, their body provides <color=#" + HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["leaf"]) + ">" + foodProvided + " food.</color>");
         }
     }
 }

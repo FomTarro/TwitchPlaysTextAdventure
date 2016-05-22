@@ -77,7 +77,7 @@ public class Help : MonoBehaviour {
 
             if(sortedCommands.Count > 0)
             {
-                TextBody.Instance.PrintToBody("# " + pc.name.ToUpper() + ":");
+                TextBody.Instance.PrintToBody("<color=#" + HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["magenta"]) + ">" + pc.name.ToUpper() + "</color>:");
             }
 
             foreach (TwitchCommand tc in sortedCommands)
@@ -92,7 +92,7 @@ public class Help : MonoBehaviour {
             }
             if (sortedCommands.Count > 0)
             {
-                TextBody.Instance.PrintToBody("\n");
+                TextBody.Instance.PrintToBody("");
             }
         }
     }

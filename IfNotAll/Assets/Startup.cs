@@ -3,9 +3,13 @@ using System.Collections;
 
 public class Startup : MonoBehaviour {
 
-	// Use this for initialization
+    // Use this for initialization
+
+    public Module startingZone;
+
 	void Start () {
         PlayCommands.ToggleCommand("join", false);
+        //enabler.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -15,8 +19,8 @@ public class Startup : MonoBehaviour {
 
     public void Begin(string input)
     {
-        
 
+        //enabler.SetActive(true);
         Debug.Log(input);
 
         CommandInput cin = new CommandInput(input);
@@ -26,6 +30,7 @@ public class Startup : MonoBehaviour {
         PlayCommands.ToggleCommand("start", false);
         ResourceTracker.Instance.IncrementDay();
         TickerHeader.Instance.PrintToHeader("Type 'JOIN: <classname>' to join the caravan.\nIf no class is provided, one will be randomly assigned.");
+        Instantiate(startingZone).EnterArea();
         TwitchIRC.Instance.SendMsg("join");
 
     }

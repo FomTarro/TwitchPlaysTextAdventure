@@ -31,6 +31,6 @@ public class TickerHeader : Singleton<TickerHeader> {
 
     public void ResetText()
     {
-        textField.text = defaultText;
+        PrintToHeader(defaultText);
     }
 }
