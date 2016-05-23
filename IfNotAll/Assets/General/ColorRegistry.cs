@@ -10,7 +10,7 @@ public class ColorRegistry : Singleton<ColorRegistry> {
 
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         CompileToDictionary();
 	}
 

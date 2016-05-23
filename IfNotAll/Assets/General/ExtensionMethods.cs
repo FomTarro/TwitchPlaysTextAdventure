@@ -25,7 +25,7 @@ public static class ExtensionMethods {
     public static string HighlightCommands(this string str)
     {
         int[] indicies = str.IndexOfAll('\'');
-        string start = "<color=#"+HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["orange"])+">";
+        string start = "<color=#"+HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["yellow"])+">";
         string end = "</color>";
         int offset = 0;
         int mod = 0;
