@@ -18,7 +18,7 @@ public class Ticker : Singleton<Ticker> {
 
 	// Use this for initialization
 	void Start () {
-    
+        tickerHistory = new List<string>();
         /*
         for (int i = 0; i < 50; i++)
         {
@@ -37,6 +37,8 @@ public class Ticker : Singleton<Ticker> {
     {
         msg = msg.Highlight('\'', "yellow", true);
         msg = msg.Highlight('@', "white", false);
+        msg = msg.Highlight('^', "magenta", false);
+        msg = msg.HighlightResources();
 
         /*
         foreach (Viewer v in ViewerRegistry.Registry.Values)

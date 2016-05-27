@@ -1,0 +1,7 @@
+<module>
+	<string id = "loc">Location</string>
+    <string id = "start_words">^A cool purple title^, followed by a @Person@ and a $-15 food$ cost, with a cool #sub# at the end.
+	</string>
+    <string id = "sub">Substitution Pointer</string>
+
+</module>

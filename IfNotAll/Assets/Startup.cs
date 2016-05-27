@@ -30,7 +30,7 @@ public class Startup : MonoBehaviour {
         PlayCommands.ToggleCommand("start", false);
         ResourceTracker.Instance.IncrementDay();
         TickerHeader.Instance.PrintToHeader("Type 'JOIN: <classname>' to join the caravan.\nIf no class is provided, one will be randomly assigned.");
-        Instantiate(startingZone).EnterArea();
+        Instantiate(startingZone);
         TwitchIRC.Instance.SendMsg("join");
 
     }

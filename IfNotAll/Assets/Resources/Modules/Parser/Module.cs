@@ -6,6 +6,7 @@ using System.Text;
 using System.Collections.Generic;
 using System;
 
+
 public class Module : MonoBehaviour {
 
     [SerializeField]
@@ -16,26 +17,33 @@ public class Module : MonoBehaviour {
     {
         get { return stringList; }
     }
-    public string locationName;
+    public Location location;
+
+    [SerializeField]
+    private string startTextHandle;
 
 	// Use this for initialization
 	void Awake () {
         Parse();
-       
-	}
+        EnterArea();
+    }
+
+    /*
+    public void AutoLaunch()
+    {
+        Parse();
+    }
+    */
 
     void Start()
     {
-        
+
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
     void Parse()
     {
+
+        stringList = new Dictionary<string, string>();
 
         XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.LoadXml(document.text);
@@ -71,11 +79,11 @@ public class Module : MonoBehaviour {
 
         if (stringList.ContainsKey("loc"))
         {
-            locationName = stringList["loc"];
+            location.locationName = stringList["loc"];
         }
         else
         {
-            locationName = "Uncharted Territory";
+            location.locationName = "Uncharted Territory";
         }
         
 
@@ -113,7 +121,14 @@ public class Module : MonoBehaviour {
 
     public void EnterArea()
     {
-        Ticker.Instance.PrintToTicker("Arrived at " + TextEffects.Instance.DisplayTitle(locationName)+".");
-        ResourceTracker.Instance.SetLocation(locationName);
+        if (location.displayEntryInTicker)
+        {
+            Ticker.Instance.PrintToTicker("Arrived at " + location.LocationFormatted() + ".");
+            ResourceTracker.Instance.SetLocation(location.locationName);
+        }
+        if (stringList.ContainsKey(startTextHandle))
+        {
+            TextBody.Instance.PrintToBody(stringList[startTextHandle]);
+        }
     }
 }

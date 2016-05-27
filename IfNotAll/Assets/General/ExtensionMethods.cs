@@ -82,4 +82,49 @@ public static class ExtensionMethods {
         return str;
     }
 
+    public static string HighlightResources(this string str)
+    {
+        int[] indicies = str.IndexOfAll('$');
+        int mod = 0;
+        int start = 0;
+        int end = 0;
+        for (int i = 0; i < indicies.Length; i++)
+        {
+            if (mod % 2 == 0)
+            {
+                start = indicies[i];
+            }
+            else
+            {
+                end = indicies[i];
+                string subKey = str.Substring(start + 1, (end - start) - 1);
+                string subValue = str.Substring(start, (end - start) + 1);
+                Debug.Log(subValue);
+                string[] parts = subKey.Split(' ');
+                for(i = 0; i < parts.Length; i++)
+                {
+                    parts[i] = parts[i].Trim();
+                    Debug.Log(parts[i]);
+                }
+
+                int value = int.Parse(parts[0]);
+                Debug.Log(value);
+                if(value > 0)
+                {
+                    str = str.Highlight('$', "leaf", false);
+                }
+                else
+                {
+                    str = str.Highlight('$', "red", false);
+                    str = str.Replace(subKey, subKey.Substring(1));
+                }
+
+
+                //HighlightResources(str);
+            }
+            mod++;
+        }
+        return str;
+    }
+
 }

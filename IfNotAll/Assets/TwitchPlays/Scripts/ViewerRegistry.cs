@@ -53,7 +53,7 @@ public class ViewerRegistry : MonoBehaviour {
             Viewer v = new Viewer(username);
             Registry.Add(username, v);
 
-            ticker.PrintToTicker(v.UsernameFormatted() + " has founded the caravan.\nProvided an initial supply of " + TextEffects.Instance.DisplayFood(Registry[username].food) +  " and " + TextEffects.Instance.DisplayCurrency(Registry[username].gold) +".");
+            ticker.PrintToTicker(v.UsernameFormatted() + " has founded the caravan.\nProvided an initial supply of $" + v.food + " food$ and " + TextEffects.Instance.DisplayCurrency(Registry[username].gold) +".");
         }
     }
 
