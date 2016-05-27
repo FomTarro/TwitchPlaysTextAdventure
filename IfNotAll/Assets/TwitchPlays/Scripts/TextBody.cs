@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Linq;
 
-public class TextBody :Singleton<TextBody> {
+public class TextBody : Singleton<TextBody> {
 
     public int maxLines;
 
@@ -23,7 +23,8 @@ public class TextBody :Singleton<TextBody> {
     // Use this for initialization
     IEnumerator Start () {
 
-        testString = "<color=#"+HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["magenta"])+ ">WAY TO FALL</color>\nA Twitch-integrated multiplayer text pilgrimage.\nBuilt in Unity by <color=#" + HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["white"]) + ">Tom Farro</color>.\nType 'HELP' for a list of commands.\nRevision 00 / Serial number 000000.\n57 41 59 54 4F 46 41 4C 4C\n";
+        testString = TextEffects.Instance.DisplayTitle("WAY TO FALL") + "\nA Twitch-integrated multiplayer text pilgrimage.\nBuilt in Unity by @Tom Farro@" 
+            + ".\nType 'HELP' for a list of commands.\nRevision 00 / Serial number 000000.\n57 41 59 54 4F 46 41 4C 4C\n";
         PrintToBody(testString);
         yield return new WaitForSeconds(1.0f);
         if (!TwitchLogin.connected)
@@ -49,7 +50,9 @@ public class TextBody :Singleton<TextBody> {
     {
         
         msg = msg.EnforceNewlines();
-        msg = msg.HighlightCommands();
+        msg = msg.Highlight('\'', "yellow", true);
+        msg = msg.Highlight('@', "white", false);
+        msg = msg.Highlight('^', "magenta", false);
         /*
         int[] indicies = msg.IndexOfAll('\'');
         string start = "<color=yellow>";
@@ -72,7 +75,7 @@ public class TextBody :Singleton<TextBody> {
         }
         */
 
-            string[] lines = msg.Split('\n');
+        string[] lines = msg.Split('\n');
         foreach(string s in lines)
         {
             bodyHistory.Add(s + "\n");

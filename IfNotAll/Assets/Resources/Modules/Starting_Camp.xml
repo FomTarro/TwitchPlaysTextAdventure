@@ -1,4 +1,9 @@
 <module>
-	<string id = "loc">The Zone</string>
+	<string id = "loc">#heckari#</string>
     <string id = "tooltip">tooltip</string>
+    <string id = "Sub1">Come visit #heckari#.</string>
+    <string id = "heckari">The Zone</string>
+    <string id = "Sub2">Tickets cost #cost#</string>
+    <string id = "cost">$-15$</string>
+
 </module>

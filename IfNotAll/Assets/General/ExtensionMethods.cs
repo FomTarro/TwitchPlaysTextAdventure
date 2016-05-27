@@ -25,7 +25,7 @@ public static class ExtensionMethods {
     public static string HighlightCommands(this string str)
     {
         int[] indicies = str.IndexOfAll('\'');
-        string start = "<color=#"+HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["yellow"])+">";
+        string start = "<color=#"+ColorRegistry.Instance.HexOfNamedColor("yellow")+">";
         string end = "</color>";
         int offset = 0;
         int mod = 0;
@@ -46,34 +46,10 @@ public static class ExtensionMethods {
         return str;
     }
 
-    public static string BoldCommands(this string str)
-    {
-        int[] indicies = str.IndexOfAll('\'');
-        string start = "<b>";
-        string end = "</b>";
-        int offset = 0;
-        int mod = 0;
-        for (int i = 0; i < indicies.Length; i++)
-        {
-            if (mod % 2 == 0)
-            {
-                str = str.Insert(indicies[i] + offset, start);
-                offset += start.Length;
-            }
-            else
-            {
-                str = str.Insert(indicies[i] + offset + 1, end);
-                offset += end.Length;
-            }
-            mod++;
-        }
-        return str;
-    }
-
-    public static string Highlight(this string str, char enclosing, Color32 color)
+    public static string Highlight(this string str, char enclosing, string color, bool keepEnclosingChar)
     {
         int[] indicies = str.IndexOfAll(enclosing);
-        string start = "<color=#"+HexConverter.ColorToHex(color)+">";
+        string start = "<color=#"+ ColorRegistry.Instance.HexOfNamedColor(color) + ">";
         string end = "</color>";
         int offset = 0;
         int mod = 0;
@@ -81,11 +57,23 @@ public static class ExtensionMethods {
         {
             if (mod % 2 == 0)
             {
+                if (!keepEnclosingChar)
+                {
+                    str = str.Remove(indicies[i] + offset, 1);
+                    
+                }
+
                 str = str.Insert(indicies[i] + offset, start);
+                
                 offset += start.Length;
             }
             else
             {
+                if (!keepEnclosingChar)
+                {
+                    str = str.Remove(indicies[i] + offset - 1, 1);
+                    offset = offset - 2;
+                }
                 str = str.Insert(indicies[i] + offset + 1, end);
                 offset += end.Length;
             }

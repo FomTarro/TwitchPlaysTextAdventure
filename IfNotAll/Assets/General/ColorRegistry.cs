@@ -4,10 +4,11 @@ using System;
 
 
 public class ColorRegistry : Singleton<ColorRegistry> {
-
+   
     public List<ColorListingEntry> colors;
-    public Dictionary<string, Color32> ColorList = new Dictionary<string, Color32>();
-
+    private Dictionary<string, Color32> colorList = new Dictionary<string, Color32>();
+    [SerializeField]
+    private Color32 defaultColor;
 
 	// Use this for initialization
 	void Awake () {
@@ -18,14 +19,17 @@ public class ColorRegistry : Singleton<ColorRegistry> {
     {
         foreach (ColorListingEntry c in colors)
         {
-            ColorList.Add(c.name, c.color);
+            colorList.Add(c.name, c.color);
         }
     }
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public string HexOfNamedColor(string color)
+    {
+        if (colorList.ContainsKey(color))
+            return HexConverter.ColorToHex(colorList[color]);
+        else
+            return HexConverter.ColorToHex(defaultColor);
+    }
 }
 
 [Serializable]

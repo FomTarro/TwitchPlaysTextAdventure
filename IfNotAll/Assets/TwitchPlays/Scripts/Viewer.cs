@@ -123,5 +123,9 @@ public class Viewer {
         }
 
     }
+    public string UsernameFormatted()
+    {
+        return "@" + username + "@";
+    }
 
 }

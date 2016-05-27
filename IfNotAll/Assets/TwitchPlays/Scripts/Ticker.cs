@@ -35,12 +35,15 @@ public class Ticker : Singleton<Ticker> {
 
     public void PrintToTicker(string msg)
     {
-        msg = msg.HighlightCommands();
+        msg = msg.Highlight('\'', "yellow", true);
+        msg = msg.Highlight('@', "white", false);
 
+        /*
         foreach (Viewer v in ViewerRegistry.Registry.Values)
         {
-            msg = msg.Replace(v.Username.ToLower(), "<color=#"+HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["white"])+">" + v.Username + "</color>");
+            msg = msg.Replace(v.Username.ToLower(), TextEffects.Instance.DisplayName(v.Username));
         }
+        */
         string[] list = msg.Split('\n');
         foreach(string s in list)
         {

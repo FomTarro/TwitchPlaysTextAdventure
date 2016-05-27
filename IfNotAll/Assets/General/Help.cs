@@ -77,7 +77,7 @@ public class Help : MonoBehaviour {
 
             if(sortedCommands.Count > 0)
             {
-                TextBody.Instance.PrintToBody("<color=#" + HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["magenta"]) + ">" + pc.name.ToUpper() + "</color>:");
+                TextBody.Instance.PrintToBody("^" + pc.name.ToUpper() + "^:");
             }
 
             foreach (TwitchCommand tc in sortedCommands)

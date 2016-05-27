@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 
 
-public class ResourceTracker : Singleton<ResourceTracker> {
+public class ResourceTracker : Singleton<ResourceTracker>
+{
 
     public static int crew = 0;
     public static int dead = 0;
@@ -22,17 +23,19 @@ public class ResourceTracker : Singleton<ResourceTracker> {
 
     private Ticker ticker;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         ticker = Ticker.Instance;
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-	    crewText.text = " CREW: " + crew;
+    // Update is called once per frame
+    void Update()
+    {
+
+        crewText.text = " CREW: " + crew;
         deadText.text = " DEAD: " + dead;
-        goldText.text = " GOLD: " + gold;
+        goldText.text = " HOPE: " + gold;
         foodText.text = " FOOD: " + food;
 
         soldierText.text = " SOLDIER: " + soldier;
@@ -46,7 +49,7 @@ public class ResourceTracker : Singleton<ResourceTracker> {
     public void IncrementDay()
     {
         day++;
-        string dayString = "<color=#"+HexConverter.ColorToHex(ColorRegistry.Instance.ColorList["cyan"])+">DAY " + day + " BEGINS</color>";
+        string dayString = "<color=#" + ColorRegistry.Instance.HexOfNamedColor("cyan") + ">DAY " + day + " BEGINS</color>";
         string buffer = "";
         /*
         for(int i = 0; i < dayString.Length; i++)
