@@ -15,8 +15,14 @@ public class ColorRegistry : Singleton<ColorRegistry> {
         CompileToDictionary();
 	}
 
+    void OnValidate()
+    {
+        CompileToDictionary();
+    }
+
     void CompileToDictionary()
     {
+        colorList = new Dictionary<string, Color32>();
         foreach (ColorListingEntry c in colors)
         {
             colorList.Add(c.name, c.color);

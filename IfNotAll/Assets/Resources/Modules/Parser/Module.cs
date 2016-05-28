@@ -11,39 +11,51 @@ public class Module : MonoBehaviour {
 
     [SerializeField]
     private TextAsset document;
+    public TextAsset Document
+    {
+        get { return document; }
+        set { document = value; }
+    }
+
+    [HideInInspector]
+    [SerializeField]
+    public List<string> handles = new List<string>();
+
     [SerializeField]
     private Dictionary<string, string> stringList = new Dictionary<string, string>();
+
     public Dictionary<string,string> StringList
     {
         get { return stringList; }
     }
     public Location location;
 
+    [HideInInspector]
     [SerializeField]
-    private string startTextHandle;
+    public int index = 0;
 
-	// Use this for initialization
-	void Awake () {
+    [SerializeField]
+    public string startTextHandle = "";
+
+
+   // Use this for initialization
+   void Awake () {
+        transform.SetParent(ModuleMaster.Instance.transform);
+        name = location.locationName;
         Parse();
         EnterArea();
     }
 
-    /*
-    public void AutoLaunch()
+    void OnValidate()
     {
         Parse();
-    }
-    */
-
-    void Start()
-    {
-
     }
 
     void Parse()
     {
 
         stringList = new Dictionary<string, string>();
+        handles = new List<string>();
 
         XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.LoadXml(document.text);
@@ -56,6 +68,7 @@ public class Module : MonoBehaviour {
                 try
                 {
                     stringList.Add(line.Attributes["id"].Value, line.InnerText.EnforceNewlines());
+                    handles.Add(line.Attributes["id"].Value);
                     //Debug.Log(line.Attributes["id"].Value + ": " + line.InnerText.EnforceNewlines());
                 }
                 catch(Exception e)
@@ -106,11 +119,11 @@ public class Module : MonoBehaviour {
                 end = indicies[i];
                 string subKey = str.Substring(start + 1, (end - start) - 1);
                 string subValue = str.Substring(start, (end - start)+1);
-                Debug.Log(subValue);
+                //Debug.Log(subValue);
                 if (stringList.ContainsKey(subKey))
                 {
                     str = str.Replace(subValue, stringList[subKey]);
-                    Debug.Log(str);
+                    //Debug.Log(str);
                 }
                 ReplaceSubs(str);
             }
