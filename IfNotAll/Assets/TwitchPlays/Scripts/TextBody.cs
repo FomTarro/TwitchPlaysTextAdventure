@@ -57,9 +57,8 @@ public class TextBody : Singleton<TextBody> {
     {
         
         msg = msg.EnforceNewlines();
-        msg = msg.Highlight('\'', "yellow", true);
-        msg = msg.Highlight('@', "white", false);
-        msg = msg.Highlight('^', "magenta", false);
+        msg = msg.HighlightPresets();
+
         /*
         int[] indicies = msg.IndexOfAll('\'');
         string start = "<color=yellow>";

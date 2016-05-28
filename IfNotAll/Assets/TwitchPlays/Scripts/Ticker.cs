@@ -35,9 +35,7 @@ public class Ticker : Singleton<Ticker> {
 
     public void PrintToTicker(string msg)
     {
-        msg = msg.Highlight('\'', "yellow", true);
-        msg = msg.Highlight('@', "white", false);
-        msg = msg.Highlight('^', "magenta", false);
+        msg = msg.HighlightPresets();
         msg = msg.HighlightResources();
 
         /*

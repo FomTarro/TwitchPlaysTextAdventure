@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEditor;
 
 [CustomEditor(typeof(Module))]
-[CanEditMultipleObjects]
 public class ModuleInspector : Editor
 {
     string[] _choices;
@@ -17,7 +16,7 @@ public class ModuleInspector : Editor
 
     public override void OnInspectorGUI()
     {
-       
+        //DrawDefaultInspector();
         module.Document = EditorGUILayout.ObjectField("XML Document", module.Document, typeof(TextAsset), true) as TextAsset;
         EditorGUILayout.LabelField("Location Name", module.location.locationName);
         module.location.displayEntryInTicker = EditorGUILayout.Toggle("Display Arrival?", module.location.displayEntryInTicker);

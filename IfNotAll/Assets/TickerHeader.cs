@@ -25,7 +25,7 @@ public class TickerHeader : Singleton<TickerHeader> {
     public void PrintToHeader(string msg)
     {
         msg = msg.EnforceNewlines();
-        msg = msg.HighlightCommands();
+        msg = msg.HighlightPresets();
         textField.text = msg;
     }
 

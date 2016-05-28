@@ -127,4 +127,13 @@ public static class ExtensionMethods {
         return str;
     }
 
+    public static string HighlightPresets(this string msg)
+    {
+        msg = msg.Highlight('\'', "yellow", true);
+        msg = msg.Highlight('@', "white", false);
+        msg = msg.Highlight('^', "magenta", false);
+
+        return msg;
+    }
+
 }

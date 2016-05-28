@@ -25,7 +25,7 @@ public class BodyHeader : Singleton<BodyHeader> {
     public void PrintToHeader(string msg)
     {
         msg = msg.EnforceNewlines();
-        msg = msg.HighlightCommands();
+        msg = msg.HighlightPresets();
         textField.text = msg;
     }
 
