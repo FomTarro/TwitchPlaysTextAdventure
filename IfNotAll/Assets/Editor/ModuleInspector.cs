@@ -6,25 +6,26 @@ using UnityEditor;
 public class ModuleInspector : Editor
 {
     string[] _choices;
-    Module module;
+    Module _module;
 
     void OnEnable()
     {
-        module = target as Module;
-        _choices = module.handles.ToArray(); ;
+        _module = target as Module;
+        
     }
 
     public override void OnInspectorGUI()
     {
         //DrawDefaultInspector();
-        module.Document = EditorGUILayout.ObjectField("XML Document", module.Document, typeof(TextAsset), true) as TextAsset;
-        EditorGUILayout.LabelField("Location Name", module.location.locationName);
-        module.location.displayEntryInTicker = EditorGUILayout.Toggle("Display Arrival?", module.location.displayEntryInTicker);
-        if (module.handles.Count > 0)
+        _choices = _module._handles.ToArray();
+        _module.Document = EditorGUILayout.ObjectField("XML Document", _module.Document, typeof(TextAsset), true) as TextAsset;
+        EditorGUILayout.LabelField("Location Name", _module.location.locationName);
+        _module.location.displayEntryInTicker = EditorGUILayout.Toggle("Display Arrival?", _module.location.displayEntryInTicker);
+        if (_choices.Length > 0)
         {
-            module.index = EditorGUILayout.Popup("Starting Text", module.index, _choices);
-            module.startTextHandle = _choices[module.index];
-            EditorGUILayout.TextArea(module.StringList[module.startTextHandle].EnforceNewlines(), GUILayout.Height(100f));
+            _module.index = EditorGUILayout.Popup("Starting Text", _module.index, _choices);
+            _module.startTextHandle = _choices[_module.index];
+            EditorGUILayout.TextArea(_module.StringList[_module.startTextHandle].EnforceNewlines(), GUILayout.Height(100f));
         }
         EditorUtility.SetDirty(target);
     }

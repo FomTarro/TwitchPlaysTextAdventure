@@ -118,8 +118,7 @@ public static class ExtensionMethods {
                     str = str.Highlight('$', "red", false);
                     str = str.Replace(subKey, subKey.Substring(1));
                 }
-
-
+                
                 //HighlightResources(str);
             }
             mod++;
@@ -130,7 +129,7 @@ public static class ExtensionMethods {
     public static string HighlightPresets(this string msg)
     {
         msg = msg.Highlight('\'', "yellow", true);
-        msg = msg.Highlight('@', "white", false);
+        msg = msg.Highlight('~', "white", false);
         msg = msg.Highlight('^', "magenta", false);
 
         return msg;

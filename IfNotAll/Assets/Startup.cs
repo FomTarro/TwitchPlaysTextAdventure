@@ -5,7 +5,7 @@ public class Startup : MonoBehaviour {
 
     // Use this for initialization
 
-    public Module startingZone;
+    public Module _startingZone;
 
 	void Start () {
         PlayCommands.ToggleCommand("join", false);
@@ -30,7 +30,7 @@ public class Startup : MonoBehaviour {
         PlayCommands.ToggleCommand("start", false);
         ResourceTracker.Instance.IncrementDay();
         TickerHeader.Instance.PrintToHeader("Type 'JOIN: <classname>' to join the caravan.\nIf no class is provided, one will be randomly assigned.");
-        Instantiate(startingZone);
+        _startingZone = Instantiate(_startingZone);
         TwitchIRC.Instance.SendMsg("join");
 
     }
