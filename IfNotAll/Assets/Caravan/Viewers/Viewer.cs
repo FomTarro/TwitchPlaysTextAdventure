@@ -31,6 +31,7 @@ public class Viewer {
     {
         get { return _food; }
     }
+    public int _deathDay = 0;
 
 
     public Viewer(string name, string atype){
@@ -110,6 +111,7 @@ public class Viewer {
     public void Kill(string cause)
     {
         _isAlive = false;
+        _deathDay = ResourceTracker.day;
         ResourceTracker.crew--;
         ResourceTracker.dead++;
         switch (_archetype)

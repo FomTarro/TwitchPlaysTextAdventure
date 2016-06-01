@@ -2,62 +2,61 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(InputField))]
 public class StreamerInput : MonoBehaviour {
 
     [SerializeField]
-    private TwitchIRC twitch;
+    private TwitchIRC _twitch;
+    private InputField _inputField;
     [SerializeField]
-    private InputField inputField;
-    [SerializeField]
-    private TextBody body;
+    private TextBody _body;
 
     [SerializeField]
-    PlayCommands loginCommands;
-    [SerializeField]
-    TwitchLogin login;
+    TwitchLogin _login;
 
-    bool loginIniatated = false;
-    bool getUsername = false;
+    bool _loginIniatated = false;
+    bool _getUsername = false;
 
-    public List<string> commandHistory;
+    public List<string> _commandHistory;
 
     private int index = -1;
 
 	// Use this for initialization
 	void Start () {
-        commandHistory.Add("");
+        _inputField = GetComponent<InputField>();
+        _commandHistory.Add("");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        inputField.Select();
-        inputField.ActivateInputField();
+        _inputField.Select();
+        _inputField.ActivateInputField();
 
-        if (inputField.textComponent.text != "" && Input.GetKey(KeyCode.Return))
+        if (_inputField.textComponent.text != "" && Input.GetKey(KeyCode.Return))
         {
-            commandHistory.Add(inputField.textComponent.text);
-            EnterCommand(inputField.textComponent.text);
-            index = commandHistory.Count;
+            _commandHistory.Add(_inputField.textComponent.text);
+            EnterCommand(_inputField.textComponent.text);
+            index = _commandHistory.Count;
             //Debug.Log(index);
         }
 
         if (Input.GetKeyUp(KeyCode.UpArrow) && index != -1)
         {
             index--;
-            index = Mathf.Clamp(index, 0, commandHistory.Count - 1);
-            Debug.Log(commandHistory[index]);
-            inputField.text = commandHistory[index];
-            inputField.MoveTextEnd(false);
+            index = Mathf.Clamp(index, 0, _commandHistory.Count - 1);
+            Debug.Log(_commandHistory[index]);
+            _inputField.text = _commandHistory[index];
+            _inputField.MoveTextEnd(false);
             
         }
         else if (Input.GetKeyUp(KeyCode.DownArrow) && index != -1)
         {
             index++;
-            index = Mathf.Clamp(index, 0, commandHistory.Count - 1);
-            Debug.Log(commandHistory[index]);
-            inputField.text = commandHistory[index];
-            inputField.MoveTextEnd(false);
+            index = Mathf.Clamp(index, 0, _commandHistory.Count - 1);
+            Debug.Log(_commandHistory[index]);
+            _inputField.text = _commandHistory[index];
+            _inputField.MoveTextEnd(false);
             
         }
     }
@@ -66,30 +65,30 @@ public class StreamerInput : MonoBehaviour {
     {
         
         Debug.Log(cmd);
-        body.PrintToBody(">" + cmd + "\n");
+        _body.PrintToBody(">" + cmd + "\n");
         if (TwitchLogin.connected) {
-            twitch.SendMsg(cmd);
+            _twitch.SendMsg(cmd);
         }
         else // hideous spaghetti code but it works offline!
         {
-            if (cmd.ToLower().Equals("login") && !loginIniatated)
+            if (cmd.ToLower().Equals("login") && !_loginIniatated)
             {
                 BeginLogin();
             }
-            else if(loginIniatated)
+            else if(_loginIniatated)
             {
                 Debug.Log("else");
-                if (getUsername)
+                if (_getUsername)
                 {
-                    login.username = cmd;
-                    getUsername = false;
-                    body.PrintToBody("Please provide an oAuth Token.\nIf you are unsure what an oAuth Token is, type 'OAUTH' for assistance.");
+                    _login.username = cmd;
+                    _getUsername = false;
+                    _body.PrintToBody("Please provide an oAuth Token.\nIf you are unsure what an oAuth Token is, type 'OAUTH' for assistance.");
                 }
-                else if(inputField.text.ToLower().Contains("oauth:"))
+                else if(_inputField.text.ToLower().Contains("oauth:"))
                 {
-                    login.oauthKey = inputField.text.ToLower();
-                    loginIniatated = false;
-                    login.Submit();
+                    _login.oauthKey = _inputField.text.ToLower();
+                    _loginIniatated = false;
+                    _login.Submit();
                 }
                 else if (cmd.ToLower().Equals("oauth"))
                 {
@@ -97,29 +96,29 @@ public class StreamerInput : MonoBehaviour {
                 }
                 else
                 {
-                    body.PrintToBody("Invalid oAuth Token. Please enter a valid oAuth Token.");
+                    _body.PrintToBody("Invalid oAuth Token. Please enter a valid oAuth Token.");
                 }
             }
         }
-        inputField.text = "";
+        _inputField.text = "";
     }
 
     public void BeginLogin()
     {
-        body.PrintToBody("Please provide your Twitch.tv username.");
-        loginIniatated = true;
-        getUsername = true;
+        _body.PrintToBody("Please provide your Twitch.tv username.");
+        _loginIniatated = true;
+        _getUsername = true;
     }
 
     public void CheckHidePassword()
     {
-        if (inputField.text.ToLower().Contains("oauth:"))
+        if (_inputField.text.ToLower().Contains("oauth:"))
         {
-            inputField.contentType = InputField.ContentType.Password;
+            _inputField.contentType = InputField.ContentType.Password;
         }
         else
         {
-            inputField.contentType = InputField.ContentType.Standard;
+            _inputField.contentType = InputField.ContentType.Standard;
         }
     }
 }

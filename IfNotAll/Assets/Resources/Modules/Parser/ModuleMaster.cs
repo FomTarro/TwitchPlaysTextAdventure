@@ -11,7 +11,14 @@ public class ModuleMaster : Singleton<ModuleMaster> {
         get { return _moduleRegistry; }
     }
 
-    public void CompileRegistry()
+    [SerializeField]
+    private Module _activeModule;
+    public Module ActiveModule
+    {
+        get { return _activeModule; }
+    }
+
+    void CompileRegistry()
     {
         foreach (Module m in GetComponentsInChildren<Module>())
         {
@@ -22,8 +29,16 @@ public class ModuleMaster : Singleton<ModuleMaster> {
             catch (Exception e)
             {
                 Debug.Log(m.name + " not added to registry.");
+                Debug.Log(e.Message);
             }
         }
+    }
+
+    public void SetActiveModule(Module m)
+    {
+        CompileRegistry();
+        _activeModule = m;
+        m.EnterArea();
     }
 
     public string LookupHandleInModule(string moduleName, string handle)
@@ -33,9 +48,10 @@ public class ModuleMaster : Singleton<ModuleMaster> {
         {
             val = _moduleRegistry[moduleName].StringList[handle.ToLower()];
         }
-        catch
+        catch(Exception e)
         {
             val = "Unable to find handle ^" + handle.ToLower() + "^ in module ^" + moduleName + "^!\nPlease report this to the developer!\nYou can reach him on Twitter at ~@FomTarro~.";
+            Debug.Log(e.Message);
         }
         return val;
     }

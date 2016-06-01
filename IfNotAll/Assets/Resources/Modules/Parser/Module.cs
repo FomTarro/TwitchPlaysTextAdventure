@@ -6,7 +6,7 @@ using System.Text;
 using System.Collections.Generic;
 using System;
 
-
+[RequireComponent(typeof(PlayCommands))]
 public class Module : MonoBehaviour {
 
     [SerializeField]
@@ -39,6 +39,7 @@ public class Module : MonoBehaviour {
 
     private Ticker _ticker;
     private TextBody _body;
+    private PlayCommands _commands;
 
    // Use this for initialization
    void Awake () {
@@ -46,17 +47,15 @@ public class Module : MonoBehaviour {
 
         _ticker = Ticker.Instance;
         _body = TextBody.Instance;
+        _commands = GetComponent<PlayCommands>();
 
         Parse();
-        EnterArea();
-
-        ModuleMaster.Instance.CompileRegistry();
+        ModuleMaster.Instance.SetActiveModule(this);
     }
 
     void OnValidate()
     {
         Parse();
-        name = location.locationName;
     }
 
     void Parse()
@@ -109,7 +108,7 @@ public class Module : MonoBehaviour {
                 location.locationName = "Uncharted Territory";
             }
         }
-
+        name = location.locationName;
     }
 
     string ReplaceSubs(string str)

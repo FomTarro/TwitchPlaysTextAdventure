@@ -9,7 +9,7 @@ public class PlayCommands : MonoBehaviour
 	[Tooltip("List of available twitch commands")]
 	public List<TwitchCommand> Commands;
 	[Tooltip("Optional delimiter for command options\n   ie. \'vote: 1\', delimiter would be \':\'")]
-	public string delimiter;
+	public static string delimiter = ":";
 
     public static char seperator = ':';
 
@@ -87,6 +87,8 @@ public class TwitchCommand
 {
 	[Tooltip("Name of Command, not relevant to code")]
 	public string name;
+    [Tooltip("Category of Command, for HELP sorting purposes")]
+    public CommandCategory category;
     [Tooltip("Is this Command one that only the Streamer can use?")]
     public bool streamerOnly = false;
     [Tooltip("Is this Command currently allowed to be used?")]

@@ -162,8 +162,9 @@ public class TwitchIRC : Singleton<TwitchIRC>
     {
         stopThreads = true;
     }
-    void OnDestroy()
+    new void OnDestroy()
     {
+        base.OnDestroy();
         stopThreads = true;
     }
 

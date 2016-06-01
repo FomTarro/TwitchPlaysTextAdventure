@@ -92,7 +92,7 @@ public class Poll : MonoBehaviour {
         string resultsText = "";
         foreach (string s in _results.Keys)
         {
-            resultsText += "'"+ s.ToUpper() + "': ";
+            resultsText += "|"+ s.ToUpper() + "|: ";
             decimal percentage = ((decimal)_results[s].Count / Mathf.Max(1,_voters.Count)) * 100.00m;
             string percentageString = percentage.ToString("F").PadLeft(6, '0');
             resultsText += percentageString + "% / ";
@@ -107,7 +107,7 @@ public class Poll : MonoBehaviour {
         string resultsText = "Poll concluded with the followng results:";
         foreach (string s in _results.Keys)
         {
-            resultsText += "\n'" + s.ToUpper() + "': ";
+            resultsText += "\n|" + s.ToUpper() + "|: ";
             decimal percentage = ((decimal)_results[s].Count / Mathf.Max(1, _voters.Count)) * 100.00m;
             string percentageString = percentage.ToString("F").PadLeft(6, '0');
             resultsText += percentageString + "%";

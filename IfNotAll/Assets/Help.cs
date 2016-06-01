@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class Help : MonoBehaviour {
 
@@ -12,7 +13,6 @@ public class Help : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //FillTooltips();
         _body = TextBody.Instance;
 	}
 	
@@ -50,7 +50,8 @@ public class Help : MonoBehaviour {
         Debug.Log("The following commands are missing tooltips: " + missingDesc);
     }
 
-    public void HelpCommand(string input)
+
+    public void HelpCommandCategorized(string input)
     {
 
         CommandInput cin = new CommandInput(input);
@@ -59,44 +60,56 @@ public class Help : MonoBehaviour {
 
         List<PlayCommands> pcList = FindObjectsOfType<PlayCommands>().ToList();
         pcList = pcList.OrderBy(PlayCommands => PlayCommands.name).ToList();
-
-        foreach (PlayCommands pc in pcList)
+        Array categories = Enum.GetValues(typeof(CommandCategory));
+        List<CommandCategory> categoriesList = new List<CommandCategory>();
+        foreach(CommandCategory cc in categories)
         {
-            List<TwitchCommand> commands = pc.Commands;
+            categoriesList.Add(cc);
+        }
+
+        categoriesList = categoriesList.OrderBy(x => x.ToString()).ToList();
+
+        foreach (CommandCategory cc in categoriesList)
+        {
+            string category = cc.ToString();
             List<TwitchCommand> validCommands = new List<TwitchCommand>();
-            string pcType = pc.name.Substring(0, pc.name.ToLower().IndexOf(" commands"));
-
-            foreach (TwitchCommand tc in commands)
+            foreach (PlayCommands pc in FindObjectsOfType<PlayCommands>())
             {
-
-                bool categoryContains = pcType.Contains(parameter) && !tc.description.Equals("");
-                bool commandContains = tc.commandKey.Contains(parameter) || tc.name.Contains(parameter);
-                bool commandEnabled = (!tc.description.Equals("") && tc.currentlyActive);
-                if ((parameter.Equals("help") && commandEnabled) || (categoryContains || commandContains) && commandEnabled)
+                foreach (TwitchCommand tc in pc.Commands)
                 {
-                    validCommands.Add(tc);
+                    if (tc.category == cc)
+                    {
+                        bool categoryContains = category.ToLower().Contains(parameter.ToLower()) && !tc.description.Equals("");
+                        bool commandContains = tc.commandKey.ToLower().Contains(parameter.ToLower()) || tc.name.ToLower().Contains(parameter.ToLower());
+                        bool commandEnabled = (!tc.description.Equals("") && tc.currentlyActive);
+                        if ((parameter.ToLower().Equals("help") && commandEnabled) || (categoryContains || commandContains) && commandEnabled)
+                        {
+                            validCommands.Add(tc);
+                        }
+                    }
                 }
             }
             List<TwitchCommand> sortedCommands = validCommands.OrderBy(TwitchCommand => TwitchCommand.commandKey).ToList();
 
-            if(sortedCommands.Count > 0)
+            if (sortedCommands.Count > 0)
             {
-               _body.PrintToBody("^" + pc.name.ToUpper() + "^:");
+                _body.PrintToBody("^" + category.ToUpper() + "^:");
             }
 
             foreach (TwitchCommand tc in sortedCommands)
             {
-                    string display = "* " + "'" + tc.commandKey.ToUpper() + "'";
-                    if (tc.streamerOnly)
-                    {
-                        display += " (~Streamer~ Only)";
-                    }
-                    _body.PrintToBody(display);
-                    _body.PrintToBody(tc.description);
+                string display = "* " + "|" + tc.commandKey.ToUpper() + "|";
+                if (tc.streamerOnly)
+                {
+                    display += " (`Streamer Only`)";
+                }
+                _body.PrintToBody(display);
+                _body.PrintToBody(tc.description);
             }
             if (sortedCommands.Count > 0)
             {
                 _body.PrintToBody("");
+
             }
         }
     }

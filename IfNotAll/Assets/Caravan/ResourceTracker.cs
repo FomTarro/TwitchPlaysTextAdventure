@@ -49,7 +49,7 @@ public class ResourceTracker : Singleton<ResourceTracker>
     public void IncrementDay()
     {
         day++;
-        string dayString = "<color=#" + ColorRegistry.Instance.HexOfNamedColor("cyan") + ">DAY " + day + " BEGINS</color>";
+        string dayString = "`DAY " + day + " BEGINS`";
         string buffer = "";
         /*
         for(int i = 0; i < dayString.Length; i++)

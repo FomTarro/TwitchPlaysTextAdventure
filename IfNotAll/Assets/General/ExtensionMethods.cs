@@ -82,6 +82,37 @@ public static class ExtensionMethods {
         return str;
     }
 
+    public static string Highlight(this string str, char enclosing, string color, char replacement)
+    {
+        int[] indicies = str.IndexOfAll(enclosing);
+        string start = "<color=#" + ColorRegistry.Instance.HexOfNamedColor(color) + ">";
+        string end = "</color>";
+        int offset = 0;
+        int mod = 0;
+        for (int i = 0; i < indicies.Length; i++)
+        {
+            if (mod % 2 == 0)
+            {
+               
+                str = str.Remove(indicies[i] + offset, 1);
+                str = str.Insert(indicies[i] + offset, replacement.ToString());
+                str = str.Insert(indicies[i] + offset, start);
+
+                offset += start.Length;
+            }
+            else
+            {
+              
+                str = str.Remove(indicies[i] + offset, 1);
+                str = str.Insert(indicies[i] + offset, replacement.ToString());
+                str = str.Insert(indicies[i] + offset + 1, end);
+                offset += end.Length;
+            }
+            mod++;
+        }
+        return str;
+    }
+
     public static string HighlightResources(this string str)
     {
         int[] indicies = str.IndexOfAll('$');
@@ -118,7 +149,8 @@ public static class ExtensionMethods {
                     str = str.Highlight('$', "red", false);
                     str = str.Replace(subKey, subKey.Substring(1));
                 }
-                
+
+
                 //HighlightResources(str);
             }
             mod++;
@@ -128,8 +160,10 @@ public static class ExtensionMethods {
 
     public static string HighlightPresets(this string msg)
     {
-        msg = msg.Highlight('\'', "yellow", true);
+        msg = msg.Highlight('|', "yellow", '\'');
+        //msg = msg.Highlight('\'', "yellow", true);
         msg = msg.Highlight('~', "white", false);
+        msg = msg.Highlight('`', "cyan", false);
         msg = msg.Highlight('^', "magenta", false);
 
         return msg;

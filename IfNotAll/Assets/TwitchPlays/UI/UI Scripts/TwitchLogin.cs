@@ -83,11 +83,11 @@ public class TwitchLogin : MonoBehaviour {
         if (!connected)
         {
             Debug.Log("Failed to connect");
-            body.PrintToBody("Unable to connect to Twitch chat.\nPlease attempt the 'LOGIN' process again.");
+            body.PrintToBody("Unable to connect to Twitch chat.\nPlease attempt the |LOGIN| process again.");
         }
         else
         {
-            body.PrintToBody("Successfuly connected to Twitch chat!\nType 'START' to begin.");
+            body.PrintToBody("Successfuly connected to Twitch chat!\nType |START| to begin.");
             //irc.SendMsg("start");
         }
         yield return null;
