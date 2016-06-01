@@ -9,6 +9,11 @@ public class Viewer {
     {
         get { return _username; }
     }
+    public string UsernameFormatted
+    {
+        get { return "[white]" + _username + "[white]"; }
+    }
+
     Archetypes _archetype;
     public Archetypes Archetype
     {
@@ -133,9 +138,6 @@ public class Viewer {
         }
 
     }
-    public string UsernameFormatted()
-    {
-        return "~" + _username + "~";
-    }
+
 
 }

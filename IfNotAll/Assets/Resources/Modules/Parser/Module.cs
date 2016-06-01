@@ -145,7 +145,7 @@ public class Module : MonoBehaviour {
     {
         if (location.displayEntryInTicker)
         {
-            _ticker.PrintToTicker("Arrived at " + location.LocationFormatted() + ".");
+            _ticker.PrintToTicker("Arrived at " + location.LocationFormatted + ".");
             ResourceTracker.Instance.SetLocation(location.locationName);
         }
         if (_stringList.ContainsKey(startTextHandle))

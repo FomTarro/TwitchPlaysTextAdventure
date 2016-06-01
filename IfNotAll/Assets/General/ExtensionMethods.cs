@@ -22,27 +22,19 @@ public static class ExtensionMethods {
         return foundIndexes.ToArray();
     }
 
-    public static string HighlightCommands(this string str)
+
+    public static string HighlightByReplacement(this string str, string color, char replacement = ' ')
     {
-        int[] indicies = str.IndexOfAll('\'');
-        string start = "<color=#"+ColorRegistry.Instance.HexOfNamedColor("yellow")+">";
-        string end = "</color>";
-        int offset = 0;
-        int mod = 0;
-        for (int i = 0; i < indicies.Length; i++)
+        str = str.Replace("["+color+"]", "|");
+        if (replacement == ' ')
         {
-            if (mod % 2 == 0)
-            {
-                str = str.Insert(indicies[i] + offset + 1, start);
-                offset += start.Length;
-            }
-            else
-            {
-                str = str.Insert(indicies[i] + offset, end);
-                offset += end.Length;
-            }
-            mod++;
+            str = str.Highlight('|', color, false);
         }
+        else
+        {
+            str = str.Highlight('|', color, replacement);
+        }
+
         return str;
     }
 
@@ -160,12 +152,19 @@ public static class ExtensionMethods {
 
     public static string HighlightPresets(this string msg)
     {
+        msg = msg.HighlightByReplacement("yellow", '\'');
+        foreach(string colorName in ColorRegistry.Instance.ColorList.Keys)
+        {
+            msg = msg.HighlightByReplacement(colorName);
+        }
+        
+        /*
         msg = msg.Highlight('|', "yellow", '\'');
-        //msg = msg.Highlight('\'', "yellow", true);
+        msg = msg.Highlight('\'', "yellow", true);
         msg = msg.Highlight('~', "white", false);
         msg = msg.Highlight('`', "cyan", false);
         msg = msg.Highlight('^', "magenta", false);
-
+        */
         return msg;
     }
 

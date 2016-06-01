@@ -1,8 +1,8 @@
 <module>
 	<string id = "loc">Title Screen</string>
-    <string id = "title_text">^WAY TO FALL^\nA Twitch-integrated multiplayer text pilgrimage.\nBuilt in Unity by ~Tom Farro~.\nType |HELP| for a list of commands.\nRevision 00 / Serial number 000000.\n57 41 59 54 4F 46 41 4C 4C
+    <string id = "title_text">[magenta]WAY TO FALL[magenta]\nA Twitch-integrated multiplayer text pilgrimage.\nBuilt in Unity by [white]Tom Farro[white].\nType [yellow]HELP[yellow] for a list of commands.\nRevision 00 / Serial number 000000.\n57 41 59 54 4F 46 41 4C 4C
 	</string>
-	<string id = "credits">^CREDITS^:\nBuilt in `Unity 5.3.2f1` by ~Tom Farro~\nConnect with him on Twitter at ~@FomTarro~.\nVisit his website at ^http://tomfarro.com^.\nUsing framework code from `Twtich Plays 1.0` by ~Alvios Games~.
+	<string id = "credits">[magenta]CREDITS[magenta]:\nBuilt in [cyan]Unity 5.3.2f1[cyan] by [white]Tom Farro[white]\nConnect with him on Twitter at [white]@FomTarro[white].\nVisit his website at [magenta]http://tomfarro.com[magenta].\nUsing framework code from [cyan]Twtich Plays 1.0[cyan] by [white]Alvios Games[white].
 	</string>
 
 </module>

@@ -1,5 +1,5 @@
 <module>
 	<string id = "loc">The Zone</string>
-	<string id = "start_text">You arrive at ^#loc#^, eager to start a bold new adventure.\nBut you really shouldn't brave it alone...\n\n...Should you?\n</string>
+	<string id = "start_text">You arrive at [magenta]#loc#[magenta], eager to start a bold new adventure.\nBut you really shouldn't brave it alone...\n\n...Should you?\n</string>
 
 </module>

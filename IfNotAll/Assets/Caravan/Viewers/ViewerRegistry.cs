@@ -44,14 +44,14 @@ public class ViewerRegistry : MonoBehaviour {
             Viewer v = new Viewer(username, parameter);
             Registry.Add(username, v);
 
-            _ticker.PrintToTicker(v.UsernameFormatted() + " has joined the crew.\nHired as a " + v.Archetype.ToString()+". Brought " + v.Food + " food and " + v.Currency + " gold."); ;
+            _ticker.PrintToTicker(v.UsernameFormatted + " has joined the crew.\nHired as a " + v.Archetype.ToString()+". Brought [leaf]" + v.Food + " food[leaf] and [leaf]" + v.Currency + "hope[leaf]."); ;
 
         }
         else if (!Registry.ContainsKey(username) && username.ToLower().Equals(TwitchIRC.Instance.nickName.ToLower())){
             Viewer v = new Viewer(username);
             Registry.Add(username, v);
 
-            _ticker.PrintToTicker(v.UsernameFormatted() + " has founded the caravan.\nProvided an initial supply of $" + v.Food + " food$ and " + TextEffects.Instance.DisplayCurrency(v.Currency) +".");
+            _ticker.PrintToTicker(v.UsernameFormatted + " has founded the caravan.\nProvided an initial supply of [leaf]" + v.Food + " food[leaf] and [leaf]" + v.Currency +" hope[leaf].");
         }
     }
 
@@ -63,10 +63,11 @@ public class ViewerRegistry : MonoBehaviour {
 
         if (Registry.ContainsKey(parameter) && Registry[parameter].IsAlive)
         {
+            Viewer v = Registry[parameter];
             Registry[parameter].Kill(username);
             int foodProvided = Random.Range(1, 4);
             ResourceTracker.food += foodProvided;
-            _ticker.PrintToTicker(parameter + " was " + TextEffects.Instance.DisplayColored("killed", "red") +  ".\nReluctantly, their body provides "  + TextEffects.Instance.DisplayFood(foodProvided) + ".");
+            _ticker.PrintToTicker(v.UsernameFormatted + " was [red]killed[red].\nReluctantly, their body provides [leaf]" + foodProvided + " food[leaf].");
         }
     }
 }

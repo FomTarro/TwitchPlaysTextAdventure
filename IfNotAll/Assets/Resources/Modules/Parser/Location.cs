@@ -5,9 +5,9 @@ using System;
 public class Location {
 
     public string locationName;
-    public string LocationFormatted()
+    public string LocationFormatted
     {
-        return "^" + locationName + "^";
+        get { return "[magenta]" + locationName + "[magenta]"; }
     }
     public bool displayEntryInTicker = true;
 

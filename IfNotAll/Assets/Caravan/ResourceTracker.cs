@@ -49,7 +49,7 @@ public class ResourceTracker : Singleton<ResourceTracker>
     public void IncrementDay()
     {
         day++;
-        string dayString = "`DAY " + day + " BEGINS`";
+        string dayString = "[cyan]DAY " + day + " BEGINS[cyan]";
         string buffer = "";
         /*
         for(int i = 0; i < dayString.Length; i++)
@@ -65,4 +65,5 @@ public class ResourceTracker : Singleton<ResourceTracker>
     {
         locText.text = " LOC: " + loc;
     }
+
 }

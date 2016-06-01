@@ -93,15 +93,15 @@ public class Help : MonoBehaviour {
 
             if (sortedCommands.Count > 0)
             {
-                _body.PrintToBody("^" + category.ToUpper() + "^:");
+                _body.PrintToBody("[magenta]" + category.ToUpper() + "[magenta]:");
             }
 
             foreach (TwitchCommand tc in sortedCommands)
             {
-                string display = "* " + "|" + tc.commandKey.ToUpper() + "|";
+                string display = "* " + "[yellow]" + tc.commandKey.ToUpper() + "[yellow]";
                 if (tc.streamerOnly)
                 {
-                    display += " (`Streamer Only`)";
+                    display += " ([cyan]Streamer Only[cyan])";
                 }
                 _body.PrintToBody(display);
                 _body.PrintToBody(tc.description);

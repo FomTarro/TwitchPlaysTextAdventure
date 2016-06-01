@@ -7,6 +7,10 @@ public class ColorRegistry : Singleton<ColorRegistry> {
    
     public List<ColorListingEntry> colors;
     private Dictionary<string, Color32> colorList = new Dictionary<string, Color32>();
+    public Dictionary<string, Color32> ColorList
+    {
+        get { return colorList; }
+    }
     [SerializeField]
     private Color32 defaultColor;
 
