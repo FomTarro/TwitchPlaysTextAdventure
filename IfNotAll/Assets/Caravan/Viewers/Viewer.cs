@@ -40,16 +40,17 @@ public class Viewer {
 
 
     public Viewer(string name, string atype){
+        atype = atype.ToLower();
         _username = name;
         switch (atype)
         {
-            case "cleric":
+            case "doctor":
                 _archetype = Archetypes.Cleric;
                 break;
-            case "soldier":
+            case "gunman":
                 _archetype = Archetypes.Soldier;
                 break;
-            case "tracker":
+            case "hunter":
                 _archetype = Archetypes.Tracker;
                 break;
             case "trader":
@@ -57,7 +58,7 @@ public class Viewer {
                 break;
             default:
                 Array a = Enum.GetValues(typeof(Archetypes));
-                int index = UnityEngine.Random.Range(0, a.Length);
+                int index = UnityEngine.Random.Range(1, a.Length);
                 _archetype = (Archetypes)a.GetValue(index);
                 break;
         }
@@ -105,6 +106,7 @@ public class Viewer {
                 break;
             default:
                 _gold = UnityEngine.Random.Range(4, 10);
+                _food = UnityEngine.Random.Range(1, 3);
                 break;
 
         }
@@ -117,6 +119,7 @@ public class Viewer {
     {
         _isAlive = false;
         _deathDay = ResourceTracker.day;
+        Ticker.Instance.PrintToTicker(UsernameFormatted + " was [red]killed[red].");
         ResourceTracker.crew--;
         ResourceTracker.dead++;
         switch (_archetype)

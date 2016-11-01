@@ -6,6 +6,7 @@ public static class ExtensionMethods {
 
     public static string EnforceNewlines(this string str)
     {
+        str = str.Replace("\t", "");
         str = str.Replace("\\n", "\n");
         return str;
 

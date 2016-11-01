@@ -36,7 +36,7 @@ public class Ticker : Singleton<Ticker> {
     public void PrintToTicker(string msg)
     {
         msg = msg.HighlightPresets();
-        msg = msg.HighlightResources();
+        //msg = msg.HighlightResources();
 
         /*
         foreach (Viewer v in ViewerRegistry.Registry.Values)

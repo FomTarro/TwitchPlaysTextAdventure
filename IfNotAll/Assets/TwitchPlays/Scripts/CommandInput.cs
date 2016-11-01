@@ -7,7 +7,7 @@ public class CommandInput {
 
     public CommandInput(string input)
     {
-        Debug.Log(input);
+        //Debug.Log(input);
         username = input.Substring(0, input.IndexOf(PlayCommands.seperator)).ToLower();
         //Debug.Log(username);
         parameter = input.Substring(username.Length + 1);

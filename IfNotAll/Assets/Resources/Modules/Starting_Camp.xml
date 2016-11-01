@@ -1,5 +1,10 @@
 <module>
-	<string id = "loc">The Zone</string>
-	<string id = "start_text">You arrive at [magenta]#loc#[magenta], eager to start a bold new adventure.\nBut you really shouldn't brave it alone...\n\n...Should you?\n</string>
+	<string id = "loc">Barrenstream</string>
+	<string id = "start_text">You arrive at [magenta]#loc#[magenta].
+		It appears to be your average market town.
+		Plot can be inserted here later, whatever. 
+		Some joker tells you, [white]"No, put the plot in there now!"[white]
+		But he's an idiot.
+	</string>
 
 </module>

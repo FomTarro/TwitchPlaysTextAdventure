@@ -67,7 +67,7 @@ public class ViewerRegistry : MonoBehaviour {
             Registry[parameter].Kill(username);
             int foodProvided = Random.Range(1, 4);
             ResourceTracker.food += foodProvided;
-            _ticker.PrintToTicker(v.UsernameFormatted + " was [red]killed[red].\nReluctantly, their body provides [leaf]" + foodProvided + " food[leaf].");
+            _ticker.PrintToTicker("Reluctantly, their body provides [leaf]" + foodProvided + " food[leaf].");
         }
     }
 }
